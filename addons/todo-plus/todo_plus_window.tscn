@@ -1,0 +1,60 @@
+[gd_scene load_steps=3 format=3 uid="uid://dtiwb1ky7gan4"]
+
+[ext_resource type="Script" path="res://addons/todo-plus/todo_plus_window.gd" id="1_rbw6o"]
+[ext_resource type="PackedScene" uid="uid://ved6kict6qsc" path="res://addons/todo-plus/todo_item.tscn" id="2_08x4g"]
+
+[node name="TodoPlusWindow" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_rbw6o")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 9
+
+[node name="Button" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+text = "Add"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="List" type="VBoxContainer" parent="VBoxContainer/ScrollContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="TodoItem" parent="VBoxContainer/ScrollContainer/List" instance=ExtResource("2_08x4g")]
+layout_mode = 2
+
+[node name="TodoItem2" parent="VBoxContainer/ScrollContainer/List" instance=ExtResource("2_08x4g")]
+layout_mode = 2
+
+[node name="TodoItem3" parent="VBoxContainer/ScrollContainer/List" instance=ExtResource("2_08x4g")]
+layout_mode = 2
+
+[node name="TodoItem4" parent="VBoxContainer/ScrollContainer/List" instance=ExtResource("2_08x4g")]
+layout_mode = 2
+
+[node name="TodoItem5" parent="VBoxContainer/ScrollContainer/List" instance=ExtResource("2_08x4g")]
+layout_mode = 2
+
+[node name="TodoItem6" parent="VBoxContainer/ScrollContainer/List" instance=ExtResource("2_08x4g")]
+layout_mode = 2
+
+[node name="TodoItem7" parent="VBoxContainer/ScrollContainer/List" instance=ExtResource("2_08x4g")]
+layout_mode = 2
+
+[node name="TodoItem8" parent="VBoxContainer/ScrollContainer/List" instance=ExtResource("2_08x4g")]
+layout_mode = 2

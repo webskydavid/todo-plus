@@ -1,0 +1,42 @@
+[gd_scene format=3 uid="uid://ved6kict6qsc"]
+
+[node name="TodoItem" type="HBoxContainer"]
+size_flags_horizontal = 3
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 2
+
+[node name="Name" type="Label" parent="."]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Name"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 10
+
+[node name="Start" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "Start"
+
+[node name="Stop" type="Button" parent="HBoxContainer"]
+visible = false
+layout_mode = 2
+text = "Stop"
+
+[node name="Pause" type="Button" parent="HBoxContainer"]
+visible = false
+layout_mode = 2
+text = "Pause"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 10
+
+[node name="LinkButton" type="LinkButton" parent="HBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+text = "12:32"
+underline = 2
