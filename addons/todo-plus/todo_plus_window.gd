@@ -1,19 +1,38 @@
 @tool
 extends Control
 
-var todos: Dictionary[int, Dictionary] = {
-	1: {
-		'name': 'Todo 1',
-		'description': 'Description blabla',
-		'started': '',
-		'finished': '',
-		'timeline':[1220]
-	}
-}
+
+@onready var add_new_todo: Button = %AddNewTodo
+@onready var list = %List
+var todo_item: PackedScene
+var counter: int = 0;
+
+var items: Array[Todo] = []
+var finished_items: Array[Todo] = []
+var deleted_items: Array[Todo] = []
+
 
 func _ready() -> void:
-	prints('fjweofjweojo')
-	prints(Time.get_time_string_from_system())
+	todo_item = preload('todo_item.tscn')
 
-func _enter_tree() -> void:
-	prints(212123)
+func _process(delta: float) -> void:
+	for item in items:
+		item.update()
+
+func _on_add_new_todo_pressed() -> void:
+	var i = todo_item.instantiate()
+	i.connect('delete', _on_delete)
+	var data = {
+		'title': '',
+		'description': '',
+	}
+	var todo = Todo.new(i, 1, data, 0.0, false, false, false)
+	i.item = todo
+	items.append(todo)
+	list.add_child(i)
+
+func _on_delete(item: Todo) -> void:
+	for i in items:
+		if(i == item):
+			i.item_instance.queue_free()
+			deleted_items.append(i)

@@ -1,7 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://dtiwb1ky7gan4"]
+[gd_scene load_steps=2 format=3 uid="uid://dtiwb1ky7gan4"]
 
 [ext_resource type="Script" path="res://addons/todo-plus/todo_plus_window.gd" id="1_rbw6o"]
-[ext_resource type="PackedScene" uid="uid://ved6kict6qsc" path="res://addons/todo-plus/todo_item.tscn" id="2_08x4g"]
 
 [node name="TodoPlusWindow" type="Control"]
 layout_mode = 3
@@ -21,7 +20,17 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 9
 
-[node name="Button" type="Button" parent="VBoxContainer"]
+[node name="Menu" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="ToggleAll" type="Button" parent="VBoxContainer/Menu"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 8
+text = "Toggle all"
+
+[node name="AddNewTodo" type="Button" parent="VBoxContainer/Menu"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 8
 text = "Add"
@@ -34,27 +43,7 @@ size_flags_vertical = 3
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_vertical = 3
 
-[node name="TodoItem" parent="VBoxContainer/ScrollContainer/List" instance=ExtResource("2_08x4g")]
-layout_mode = 2
-
-[node name="TodoItem2" parent="VBoxContainer/ScrollContainer/List" instance=ExtResource("2_08x4g")]
-layout_mode = 2
-
-[node name="TodoItem3" parent="VBoxContainer/ScrollContainer/List" instance=ExtResource("2_08x4g")]
-layout_mode = 2
-
-[node name="TodoItem4" parent="VBoxContainer/ScrollContainer/List" instance=ExtResource("2_08x4g")]
-layout_mode = 2
-
-[node name="TodoItem5" parent="VBoxContainer/ScrollContainer/List" instance=ExtResource("2_08x4g")]
-layout_mode = 2
-
-[node name="TodoItem6" parent="VBoxContainer/ScrollContainer/List" instance=ExtResource("2_08x4g")]
-layout_mode = 2
-
-[node name="TodoItem7" parent="VBoxContainer/ScrollContainer/List" instance=ExtResource("2_08x4g")]
-layout_mode = 2
-
-[node name="TodoItem8" parent="VBoxContainer/ScrollContainer/List" instance=ExtResource("2_08x4g")]
-layout_mode = 2
+[connection signal="pressed" from="VBoxContainer/Menu/ToggleAll" to="." method="_on_toggle_all_pressed"]
+[connection signal="pressed" from="VBoxContainer/Menu/AddNewTodo" to="." method="_on_add_new_todo_pressed"]
