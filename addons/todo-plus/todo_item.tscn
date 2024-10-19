@@ -58,9 +58,14 @@ texture_normal = ExtResource("3_lfoxs")
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
+focus_mode = 1
 theme_override_font_sizes/font_size = 12
 text = "Name fjelfewfjewofjewo jofej ofjeowfj oewjf owejf oej fowejf owejf owej fowejf owejf oewName fjelfewfjewofjewo jofej ofjeowfj oewjf owejf oej fowejf owejf owej fowejf owejf oewName fjelfewfjewofjewo jofej ofjeowfj oewjf owejf oej fowejf owejf owej fowejf owejf oewName fjelfewfjewofjewo jofej ofjeowfj oewjf owejf oej fowejf owejf owej fowejf owejf oew"
+placeholder_text = "Add title"
+editable = false
+selecting_enabled = false
 flat = true
+select_all_on_focus = true
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/TodoBackground/Top"]
 layout_mode = 2
@@ -134,6 +139,7 @@ dialog_text = "Remove?"
 
 [connection signal="toggled" from="MarginContainer/TodoBackground/Top/MarginContainer/Done" to="." method="_on_check_box_toggled"]
 [connection signal="pressed" from="MarginContainer/TodoBackground/Top/ToggleDescription" to="." method="_on_toggle_description_pressed"]
+[connection signal="gui_input" from="MarginContainer/TodoBackground/Top/Title" to="." method="_on_title_gui_input"]
 [connection signal="text_submitted" from="MarginContainer/TodoBackground/Top/Title" to="." method="_on_title_text_submitted"]
 [connection signal="button_up" from="MarginContainer/TodoBackground/Top/HBoxContainer/Start" to="." method="_on_start_button_up"]
 [connection signal="pressed" from="MarginContainer/TodoBackground/Top/HBoxContainer/Pause" to="." method="_on_pause_pressed"]

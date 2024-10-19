@@ -16,24 +16,48 @@ signal done_signal(todo: TodoItem)
 @onready var time_update: Timer = %TimeUpdate
 @onready var confirm: ConfirmationDialog = %ConfirmationDialog
 
+@export var new_array: Array[Todo]
 @export var item: Todo
 
 func update_item_visibility() -> void:
+	if(item.is_done):
+		start.visible = false
+		stop.visible = false
+		pause.visible = false
+		delete.visible = false
+		done.set_pressed_no_signal(true)
+		todo_bg.color = Color(0.373, 0.668, 0.331, 0.3)
+		return
+
 	if(item.started and !item.paused): # Started
 		start.visible = false
 		stop.visible = true
 		pause.visible = true
 		time.visible = true
-	elif(item.started and item.paused): # Paused
+		return
+
+	if(item.started and item.paused): # Paused
 		start.visible = true
 		stop.visible = true
 		pause.visible = false
-	elif(item.deleted):
+		time.visible = true
+		return
+
+	if(item.deleted):
 		done.visible = false
 		start.visible = false
 		stop.visible = false
 		pause.visible = false
 		delete.visible = false
+		return
+
+
+
+func has_started_item() -> bool:
+	prints(1)
+	return new_array.any(func(todo):
+		prints(todo.started)
+		return todo.started)
 
 func _ready() -> void:
 	title.text = item.data.title
@@ -46,10 +70,16 @@ func _on_toggle_description_pressed() -> void:
 	desc.visible = status
 
 func _on_start_button_up() -> void:
+	if(has_started_item()): return
 	item.started = true
 	item.paused = false
+
+	start.visible = false
+	stop.visible = true
+	pause.visible = true
+
+	time.visible = true
 	time_update.start()
-	update_item_visibility()
 
 func _on_stop_pressed() -> void:
 	item.timer = 0.0
@@ -107,3 +137,13 @@ func _on_check_box_toggled(toggled_on: bool) -> void:
 		start.visible = true
 		delete.visible = true
 	done_signal.emit(self)
+
+
+func _on_title_gui_input(event: InputEvent) -> void:
+	if(event is InputEventMouseButton && event.double_click):
+		title.editable = true
+
+	if(event is InputEventKey):
+		if(event.keycode == KEY_ENTER && title.is_editing()):
+			title.editable = false
+			prints(event.keycode == KEY_ENTER, title.is_editing())
