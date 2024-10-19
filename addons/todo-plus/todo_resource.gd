@@ -1,13 +1,15 @@
 class_name Todo extends Resource
 
 
-var item_instance: TodoItem
+var item_instance
 var key: int
 var data: Dictionary
 var timer: float
 var started: bool
 var paused: bool
+var deleted: bool = false
 var visible: bool
+var is_done: bool = false
 
 func _init(_item_instance, _key, _data, _timer, _started, _paused, _visible) -> void:
 	item_instance = _item_instance

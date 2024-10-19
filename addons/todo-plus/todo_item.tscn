@@ -1,9 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://ved6kict6qsc"]
+[gd_scene load_steps=7 format=3 uid="uid://ved6kict6qsc"]
 
 [ext_resource type="Script" path="res://addons/todo-plus/todo_item.gd" id="1_ibirs"]
-[ext_resource type="Texture2D" uid="uid://bg72kln7n3tf7" path="res://addons/todo-plus/icons/Collapse.svg" id="2_ajbe3"]
 [ext_resource type="Texture2D" uid="uid://352djf3w115l" path="res://addons/todo-plus/icons/icon_play.svg" id="2_jleu6"]
-[ext_resource type="Texture2D" uid="uid://daayjkcgtvsbg" path="res://addons/todo-plus/icons/icon_import_check.svg" id="2_p01gh"]
+[ext_resource type="Texture2D" uid="uid://cj0u50nacho1i" path="res://addons/todo-plus/icons/icon_rich_text_effect.svg" id="3_lfoxs"]
 [ext_resource type="Texture2D" uid="uid://cmqa444i8j0x0" path="res://addons/todo-plus/icons/Stop.svg" id="4_rghtr"]
 [ext_resource type="Texture2D" uid="uid://bqmau4n20uui3" path="res://addons/todo-plus/icons/Pause.svg" id="5_nk7mf"]
 [ext_resource type="Texture2D" uid="uid://d0vb6iilkgkpy" path="res://addons/todo-plus/icons/Remove.svg" id="6_3djws"]
@@ -18,30 +17,44 @@ size_flags_horizontal = 3
 size_flags_vertical = 0
 script = ExtResource("1_ibirs")
 
-[node name="Top" type="HBoxContainer" parent="."]
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+
+[node name="TodoBackground" type="ColorRect" parent="MarginContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 24)
 layout_mode = 2
 size_flags_vertical = 4
-theme_override_constants/separation = -3
+color = Color(0.188235, 0.54902, 0.243137, 0)
 
-[node name="MarginContainer" type="MarginContainer" parent="Top"]
+[node name="Top" type="HBoxContainer" parent="MarginContainer/TodoBackground"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -12.5
+offset_bottom = 12.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 4
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/TodoBackground/Top"]
 layout_mode = 2
-theme_override_constants/margin_right = 16
+theme_override_constants/margin_right = -2
 
-[node name="Done" type="TextureButton" parent="Top/MarginContainer"]
+[node name="Done" type="CheckBox" parent="MarginContainer/TodoBackground/Top/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="ToggleDescription" type="TextureButton" parent="MarginContainer/TodoBackground/Top"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-texture_normal = ExtResource("2_p01gh")
+texture_normal = ExtResource("3_lfoxs")
 
-[node name="ToggleDescription" type="TextureButton" parent="Top"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-texture_normal = ExtResource("2_ajbe3")
-
-[node name="Title" type="LineEdit" parent="Top"]
+[node name="Title" type="LineEdit" parent="MarginContainer/TodoBackground/Top"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -49,11 +62,11 @@ theme_override_font_sizes/font_size = 12
 text = "Name fjelfewfjewofjewo jofej ofjeowfj oewjf owejf oej fowejf owejf owej fowejf owejf oewName fjelfewfjewofjewo jofej ofjeowfj oewjf owejf oej fowejf owejf owej fowejf owejf oewName fjelfewfjewofjewo jofej ofjeowfj oewjf owejf oej fowejf owejf owej fowejf owejf oewName fjelfewfjewofjewo jofej ofjeowfj oewjf owejf oej fowejf owejf owej fowejf owejf oew"
 flat = true
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Top"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/TodoBackground/Top"]
 layout_mode = 2
 size_flags_horizontal = 8
 
-[node name="Time" type="Label" parent="Top/HBoxContainer"]
+[node name="Time" type="Label" parent="MarginContainer/TodoBackground/Top/HBoxContainer"]
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
@@ -61,7 +74,7 @@ size_flags_horizontal = 0
 theme_override_font_sizes/font_size = 12
 text = "00:00:00"
 
-[node name="Start" type="TextureButton" parent="Top/HBoxContainer"]
+[node name="Start" type="TextureButton" parent="MarginContainer/TodoBackground/Top/HBoxContainer"]
 unique_name_in_owner = true
 modulate = Color(0.482567, 0.719907, 0.938282, 1)
 layout_mode = 2
@@ -70,7 +83,15 @@ size_flags_vertical = 4
 action_mode = 0
 texture_normal = ExtResource("2_jleu6")
 
-[node name="Stop" type="TextureButton" parent="Top/HBoxContainer"]
+[node name="Pause" type="TextureButton" parent="MarginContainer/TodoBackground/Top/HBoxContainer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture_normal = ExtResource("5_nk7mf")
+
+[node name="Stop" type="TextureButton" parent="MarginContainer/TodoBackground/Top/HBoxContainer"]
 unique_name_in_owner = true
 visible = false
 modulate = Color(1, 0.527884, 0.238803, 1)
@@ -79,19 +100,11 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 texture_normal = ExtResource("4_rghtr")
 
-[node name="Pause" type="TextureButton" parent="Top/HBoxContainer"]
-unique_name_in_owner = true
-visible = false
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-texture_normal = ExtResource("5_nk7mf")
-
-[node name="HBoxContainer2" type="HBoxContainer" parent="Top/HBoxContainer"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/TodoBackground/Top/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 10
 
-[node name="Delete" type="TextureButton" parent="Top/HBoxContainer/HBoxContainer2"]
+[node name="Delete" type="TextureButton" parent="MarginContainer/TodoBackground/Top/HBoxContainer/HBoxContainer2"]
 unique_name_in_owner = true
 modulate = Color(1, 0.300051, 0.236805, 1)
 layout_mode = 2
@@ -101,6 +114,7 @@ texture_normal = ExtResource("6_3djws")
 
 [node name="Description" type="TextEdit" parent="."]
 unique_name_in_owner = true
+visible = false
 custom_minimum_size = Vector2(0, 70)
 layout_mode = 2
 size_flags_vertical = 3
@@ -118,12 +132,13 @@ unique_name_in_owner = true
 position = Vector2i(0, 36)
 dialog_text = "Remove?"
 
-[connection signal="pressed" from="Top/ToggleDescription" to="." method="_on_toggle_description_pressed"]
-[connection signal="text_submitted" from="Top/Title" to="." method="_on_title_text_submitted"]
-[connection signal="button_up" from="Top/HBoxContainer/Start" to="." method="_on_start_button_up"]
-[connection signal="pressed" from="Top/HBoxContainer/Stop" to="." method="_on_stop_pressed"]
-[connection signal="pressed" from="Top/HBoxContainer/Pause" to="." method="_on_pause_pressed"]
-[connection signal="pressed" from="Top/HBoxContainer/HBoxContainer2/Delete" to="." method="_on_delete_pressed"]
+[connection signal="toggled" from="MarginContainer/TodoBackground/Top/MarginContainer/Done" to="." method="_on_check_box_toggled"]
+[connection signal="pressed" from="MarginContainer/TodoBackground/Top/ToggleDescription" to="." method="_on_toggle_description_pressed"]
+[connection signal="text_submitted" from="MarginContainer/TodoBackground/Top/Title" to="." method="_on_title_text_submitted"]
+[connection signal="button_up" from="MarginContainer/TodoBackground/Top/HBoxContainer/Start" to="." method="_on_start_button_up"]
+[connection signal="pressed" from="MarginContainer/TodoBackground/Top/HBoxContainer/Pause" to="." method="_on_pause_pressed"]
+[connection signal="pressed" from="MarginContainer/TodoBackground/Top/HBoxContainer/Stop" to="." method="_on_stop_pressed"]
+[connection signal="pressed" from="MarginContainer/TodoBackground/Top/HBoxContainer/HBoxContainer2/Delete" to="." method="_on_delete_pressed"]
 [connection signal="text_changed" from="Description" to="." method="_on_description_text_changed"]
 [connection signal="timeout" from="TimeUpdate" to="." method="_on_time_update_timeout"]
 [connection signal="confirmed" from="ConfirmationDialog" to="." method="_on_confirmation_dialog_confirmed"]
