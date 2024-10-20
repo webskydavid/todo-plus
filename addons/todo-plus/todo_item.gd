@@ -12,6 +12,7 @@ signal done_signal(todo: TodoItem)
 @onready var stop: TextureButton = %Stop
 @onready var pause: TextureButton = %Pause
 @onready var delete: TextureButton = %Delete
+@onready var priority: OptionButton = %Priority
 @onready var time: Label = %Time
 @onready var time_update: Timer = %TimeUpdate
 @onready var confirm: ConfirmationDialog = %ConfirmationDialog
@@ -25,6 +26,7 @@ func update_item_visibility() -> void:
 		stop.visible = false
 		pause.visible = false
 		delete.visible = false
+		time.visible = true
 		done.set_pressed_no_signal(true)
 		todo_bg.color = Color(0.373, 0.668, 0.331, 0.3)
 		return
@@ -49,28 +51,28 @@ func update_item_visibility() -> void:
 		stop.visible = false
 		pause.visible = false
 		delete.visible = false
+		priority.visible = false
 		return
 
-
-
-func has_started_item() -> bool:
-	prints(1)
+func check_if_can_start_timer() -> bool:
 	return new_array.any(func(todo):
-		prints(todo.started)
-		return todo.started)
+		return todo.started and !todo.paused)
 
 func _ready() -> void:
 	title.text = item.data.title
 	desc.text = item.data.description
 	desc.visible = item.visible
+	time.text = Time.get_time_string_from_unix_time(item.timer)
+	priority.select(item.priority)
 	update_item_visibility()
 
+#region SIGNALS
 func _on_toggle_description_pressed() -> void:
 	var status = !desc.visible
 	desc.visible = status
 
 func _on_start_button_up() -> void:
-	if(has_started_item()): return
+	if(check_if_can_start_timer()): return
 	item.started = true
 	item.paused = false
 
@@ -106,9 +108,6 @@ func _on_delete_pressed() -> void:
 func _on_time_update_timeout() -> void:
 	item.timer += 1
 
-func _on_title_text_submitted(new_text: String) -> void:
-	item.data.title = new_text
-
 func _on_description_text_changed() -> void:
 	item.data.description = desc.text
 
@@ -138,6 +137,11 @@ func _on_check_box_toggled(toggled_on: bool) -> void:
 		delete.visible = true
 	done_signal.emit(self)
 
+func _on_title_text_changed(new_text: String) -> void:
+	item.data.title = new_text
+
+func _on_title_focus_exited() -> void:
+	title.editable = false
 
 func _on_title_gui_input(event: InputEvent) -> void:
 	if(event is InputEventMouseButton && event.double_click):
@@ -146,4 +150,8 @@ func _on_title_gui_input(event: InputEvent) -> void:
 	if(event is InputEventKey):
 		if(event.keycode == KEY_ENTER && title.is_editing()):
 			title.editable = false
-			prints(event.keycode == KEY_ENTER, title.is_editing())
+
+func _on_priority_item_selected(index: int) -> void:
+	item.priority = index
+
+#endregion
